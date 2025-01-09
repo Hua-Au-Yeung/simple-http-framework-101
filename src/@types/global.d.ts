@@ -1,18 +1,22 @@
-import { IncomingMessage, ServerResponse } from 'http';
+import { IncomingMessage } from 'http';
 
 declare global {
-    type Middleware = (incomingMessage: IncomingMessage, requestContext: RequestContext) => RequestContext;
-    type Route = {
+    interface Middleware {
+        (incomingMessage: IncomingMessage, requestContext: RequestContext): RequestContext;
+    }
+
+    interface Route {
         method: string;
         pathname: string;
         controller: (incomingMessage: IncomingMessage, requestContext: RequestContext) => string;
-    };
-    type RequestContext = {
+    }
+
+    interface RequestContext {
         statusCode: number;
         closeConnection: boolean;
         responseBody?: string;
         url?: URL;
         method?: string;
-    };
+    }
 }
 export {};
